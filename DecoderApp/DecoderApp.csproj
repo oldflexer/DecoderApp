@@ -7,4 +7,17 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="View\img\decryption.ico" />
+      <Resource Include="View\Resources\decryption.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="View\Resources\ThemeLight.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>
