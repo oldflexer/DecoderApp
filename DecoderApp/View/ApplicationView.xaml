@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="" Height="720" Width="1280" Style="{DynamicResource WindowStyle}" Icon="/View/Resources/decryption.ico">
-    
+        Title=""
+        MinHeight="720" 
+        MinWidth="1280" 
+        Height="720" 
+        Width="1280" 
+        Style="{DynamicResource WindowStyle}" 
+        Icon="/View/Resources/decryption.ico">
+
     <Window.Resources>
         <Style x:Key="WindowStyle" TargetType="Window">
             <Setter Property="Background" Value="LightGray"></Setter>
@@ -14,9 +20,9 @@
         <Style x:Key="GridStyle" TargetType="Grid">
             <Setter Property="Background" Value="LightGray"></Setter>
         </Style>
-        
+
         <Style x:Key="BaseLabelStyle" TargetType="Label">
-            <Setter Property="FontFamily" Value="BankGothic"></Setter>
+            <Setter Property="FontFamily" Value="Consolas"></Setter>
             <Setter Property="FontSize" Value="25"></Setter>
             <Setter Property="Foreground" Value="DarkSlateGray"></Setter>
 
@@ -29,6 +35,13 @@
             <Setter Property="FontWeight" Value="Bold"></Setter>
 
             <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+        </Style>
+
+        <Style x:Key="LabelProgressBarStyle" TargetType="Label" BasedOn="{StaticResource BaseLabelStyle}">
+            <Setter Property="FontStyle" Value="Italic"></Setter>
+
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         </Style>
 
         <Style x:Key="TextBoxFileStyle" TargetType="TextBox">
@@ -48,7 +61,7 @@
 
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TypeName=TextBox}">
+                    <ControlTemplate TargetType="TextBox">
                         <Border x:Name="border"
                                 BorderBrush="{TemplateBinding Property=BorderBrush}"
                                 BorderThickness="{TemplateBinding Property=BorderThickness}"
@@ -94,7 +107,7 @@
 
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TypeName=Button}">
+                    <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
                                 BorderBrush="{TemplateBinding Property=BorderBrush}"
                                 BorderThickness="{TemplateBinding Property=BorderThickness}"
@@ -128,18 +141,14 @@
             <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
             <Setter Property="MaxHeight" Value="75"></Setter>
             <Setter Property="Width" Value="200"></Setter>
-            
         </Style>
 
         <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
             <Setter Property="FontFamily" Value="DeusEx"></Setter>
             <Setter Property="FontSize" Value="25"></Setter>
             <Setter Property="Foreground" Value="DarkSlateGray"></Setter>
-            <!-- <Setter Property="Padding" Value="4"></Setter> -->
 
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <!-- <Setter Property="MaxHeight" Value="75"></Setter> -->
-            <!-- <Setter Property="Width" Value="200"></Setter> -->
+            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
 
             <Setter Property="Minimum" Value="0"></Setter>
             <Setter Property="Maximum" Value="100"></Setter>
@@ -148,19 +157,186 @@
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="BorderBrush" Value="DarkSlateGray"></Setter>
         </Style>
+
+        <ControlTemplate x:Key="ComboBoxToggleButtonStyle" TargetType="ToggleButton">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    x:Name="Border"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="0"
+                    Background="LightGray"
+                    BorderBrush="DarkSlateGray"
+                    BorderThickness="5" />
+                <Border
+                    Grid.Column="0"
+                    CornerRadius="0"
+                    Margin="0"
+                    Background="LightGray"
+                    BorderBrush="DarkSlateGray"
+                    BorderThickness="5" />
+                <Path
+                    x:Name="Arrow"
+                    Grid.Column="1"
+                    Fill="DarkSlateGray"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" TargetName="Border" Value="0" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="Border" Value="LightSlateGray" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBoxStyle" TargetType="TextBox">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="BaseComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Consolas"></Setter>
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="DarkSlateGray"></Setter>
+            <Setter Property="Padding" Value="4"></Setter>
+            
+            <Setter Property="MinHeight" Value="50"></Setter>
+            <Setter Property="MaxHeight" Value="50"></Setter>
+            
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton
+                                Name="ToggleButton"
+                                Template="{StaticResource ComboBoxToggleButtonStyle}"
+                                
+                                Focusable="false"
+                                IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="10"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+                                     Style="{x:Null}"
+                                     Template="{StaticResource ComboBoxTextBoxStyle}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     Margin="10"
+                                     Focusable="True"
+                                     Background="LightGray"
+                                     Foreground="DarkSlateGray"
+                                     Visibility="Hidden"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}" />
+                            <Popup
+                                Name="Popup"
+                                Placement="Bottom"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                AllowsTransparency="True"
+                                Focusable="False"
+                                PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                                      SnapsToDevicePixels="True"
+                                      MinWidth="{TemplateBinding ActualWidth}"
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border
+                                        x:Name="DropDownBorder"
+                                        Background="LightGray"
+                                        BorderThickness="5"
+                                        BorderBrush="DarkSlateGray" />
+                                    <ScrollViewer Margin="10" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="25" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="DropDownBorder" Value="0" />
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0" />
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="5" />
+                            </Trigger>
+                            <Trigger Property="IsEditable" Value="true">
+                                <Setter Property="IsTabStop" Value="false" />
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="BaseComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="Foreground" Value="DarkSlateGray" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border Name="Border"
+                                Padding="4"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="LightSlateGray" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid ShowGridLines="True" Style="{DynamicResource ResourceKey=GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -200,25 +376,60 @@
         </Button>
 
         <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="10"
+               Content="↓ Choose a decryption method"
+               Style="{DynamicResource ResourceKey=BaseLabelStyle}">
+        </Label>
+        <ComboBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5"
+                  x:Name="ComboBoxMethods"
+                  Style="{DynamicResource ResourceKey=BaseComboBoxStyle}">
+            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+        </ComboBox>
+        
+        <Label Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="4"
+               Content="↓ Arguments"
+               Style="{DynamicResource ResourceKey=BaseLabelStyle}">
+        </Label>
+        <TextBox Grid.Row="6" Grid.Column="7" Grid.ColumnSpan="4"
+                 Style="{DynamicResource ResourceKey=TextBoxFileStyle}">
+        </TextBox>
+
+        <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="10"
                Content="↓ Enter an output absolute name for the decrypted file"
                Style="{DynamicResource ResourceKey=BaseLabelStyle}">
         </Label>
-        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="8"
+        <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="8"
                  Style="{DynamicResource ResourceKey=TextBoxFileStyle}">
         </TextBox>
-        <Button Grid.Row="6" Grid.Column="9" Grid.ColumnSpan="2"
+        <Button Grid.Row="8" Grid.Column="9" Grid.ColumnSpan="2"
                 Content="Save as"
                 Style="{DynamicResource ResourceKey=BaseButtonStyle}">
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="2"
+        <Button Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="2"
                 Content="Decrypt"
                 Style="{DynamicResource ResourceKey=ButtonMajorStyle}">
         </Button>
 
-        <ProgressBar Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="6"
+        <Label Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="10"
+               Content="∗∗∗ Progress"
+               Style="{DynamicResource ResourceKey=LabelProgressBarStyle}">
+        </Label>
+        <ProgressBar Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="10"
                      Style="{DynamicResource ResourceKey=ProgressBarStyle}">
-
         </ProgressBar>
 
     </Grid>
