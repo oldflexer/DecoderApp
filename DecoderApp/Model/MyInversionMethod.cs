@@ -16,11 +16,10 @@ public class MyInversionMethod : DecryptionMethod
         }
         catch (Exception e)
         {
-            MessageBox.Show(e.ToString());
+            MessageBox.Show(messageBoxText:e.ToString());
             return data;
         }
         
         return data;
-        
     }
 }

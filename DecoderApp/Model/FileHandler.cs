@@ -44,8 +44,10 @@ public class FileHandler
         return _fileData;
     }
     
-    public void SaveFile(string filename, byte[] data)
+    public static void SaveFile(string filename, byte[] data)
     {
+        if (File.Exists(filename)) File.WriteAllText(filename, string.Empty);
+        
         try
         {
             using (var fileStream = File.Create(filename))

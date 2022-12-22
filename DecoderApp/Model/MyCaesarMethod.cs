@@ -9,19 +9,22 @@ public class MyCaesarMethod : DecryptionMethod
     {
         try
         {
+            var key = byte.MaxValue;
+
             if (Convert.ToDouble(argument) <= 255 && Convert.ToDouble(argument) >= 0)
             {
-                byte key = Convert.ToByte(argument);
-                MessageBox.Show(key.ToString());
-                for (var i = 0; i < data.Length; i++)
-                {
-                    data[i] += key;
-                }
+                key = Convert.ToByte(argument);
+            }
+
+            MessageBox.Show(messageBoxText:key.ToString());
+            for (var i = 0; i < data.Length; i++)
+            {
+                data[i] -= key;
             }
         }
         catch (Exception e)
         {
-            MessageBox.Show(e.ToString());
+            MessageBox.Show(messageBoxText:e.ToString());
             return data;
         }
 

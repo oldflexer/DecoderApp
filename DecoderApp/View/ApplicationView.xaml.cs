@@ -1,29 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
+using DecoderApp.ViewModel;
 
-namespace DecoderApp
+namespace DecoderApp.View
 {
     /// <summary>
     /// Interaction logic for ApplicationView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private readonly ApplicationViewModel _viewModel = new ApplicationViewModel();
+        private readonly ApplicationViewModel _viewModel = new();
         
         public MainWindow()
         {
@@ -45,6 +31,42 @@ namespace DecoderApp
         private void ButtonDecrypt_OnClick(object sender, RoutedEventArgs e)
         {
             _viewModel.DecryptFile(TextBoxOpenFile.Text, TextBoxSaveFile.Text, TextBoxArgument.Text);
+        }
+
+        private void ButtonCloseApp_OnClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        
+        private void ButtonWindowApp_OnClick(object sender, RoutedEventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Maximized:
+                    WindowState = WindowState.Normal;
+                    return;
+                case WindowState.Normal:
+                    WindowState = WindowState.Maximized;
+                    return;
+                case WindowState.Minimized:
+                    WindowState = WindowState.Maximized;
+                    return;
+                default:
+                    WindowState = WindowState.Maximized;
+                    return;
+            }
+        }
+
+        private void ButtonMinimizeApp_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton != MouseButtonState.Pressed) return;
+            WindowState = WindowState.Normal;
+            DragMove();
         }
     }
 }
