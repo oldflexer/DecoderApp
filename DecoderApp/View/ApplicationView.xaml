@@ -96,7 +96,7 @@
             <Setter Property="Padding" Value="4"></Setter>
 
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
             <Setter Property="MinHeight" Value="50"></Setter>
             <Setter Property="MaxHeight" Value="50"></Setter>
             <Setter Property="MinWidth" Value="175"></Setter>
@@ -138,15 +138,16 @@
         <Style x:Key="ButtonMajorStyle" TargetType="Button" BasedOn="{StaticResource ResourceKey=BaseButtonStyle}">
             <Setter Property="FontSize" Value="30"></Setter>
 
-            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="MaxHeight" Value="75"></Setter>
             <Setter Property="Width" Value="200"></Setter>
         </Style>
 
         <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
-            <Setter Property="FontFamily" Value="DeusEx"></Setter>
-            <Setter Property="FontSize" Value="25"></Setter>
-            <Setter Property="Foreground" Value="DarkSlateGray"></Setter>
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="FontFamily" Value="DeusEx"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
 
             <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
 
@@ -205,8 +206,8 @@
         </ControlTemplate>
 
         <Style x:Key="BaseComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="FontFamily" Value="Consolas"></Setter>
-            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="25"/>
             <Setter Property="Foreground" Value="DarkSlateGray"></Setter>
             <Setter Property="Padding" Value="4"></Setter>
             
@@ -368,9 +369,12 @@
                Style="{DynamicResource ResourceKey=BaseLabelStyle}">
         </Label>
         <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="8"
+                 Name="TextBoxOpenFile"
                  Style="{DynamicResource ResourceKey=TextBoxFileStyle}">
         </TextBox>
         <Button Grid.Row="4" Grid.Column="9" Grid.ColumnSpan="2"
+                Name="ButtonOpenFile"
+                Click="ButtonOpenFile_OnClick"
                 Content="Open"
                 Style="{DynamicResource ResourceKey=BaseButtonStyle}">
         </Button>
@@ -380,30 +384,22 @@
                Style="{DynamicResource ResourceKey=BaseLabelStyle}">
         </Label>
         <ComboBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5"
-                  x:Name="ComboBoxMethods"
-                  Style="{DynamicResource ResourceKey=BaseComboBoxStyle}">
-            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST1" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST2" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
-            <ComboBoxItem Content="TEST3" Style="{DynamicResource ResourceKey=BaseComboBoxItemStyle}"/>
+                  Name="ComboBoxMethods"
+                  ItemsSource="{Binding DecryptionMethods}"
+                  SelectedItem="{Binding SelectedDecryptionMethod}"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  IsSynchronizedWithCurrentItem="True"
+                  DisplayMemberPath="Title"
+                  Style="{DynamicResource ResourceKey=BaseComboBoxStyle}"
+                  ItemContainerStyle="{DynamicResource BaseComboBoxItemStyle}" d:DataContext="{d:DesignInstance }">
         </ComboBox>
         
         <Label Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="4"
-               Content="↓ Arguments"
+               Content="↓ Cipher key (1-255)"
                Style="{DynamicResource ResourceKey=BaseLabelStyle}">
         </Label>
         <TextBox Grid.Row="6" Grid.Column="7" Grid.ColumnSpan="4"
+                 Name="TextBoxArgument"
                  Style="{DynamicResource ResourceKey=TextBoxFileStyle}">
         </TextBox>
 
@@ -412,14 +408,19 @@
                Style="{DynamicResource ResourceKey=BaseLabelStyle}">
         </Label>
         <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="8"
+                 Name="TextBoxSaveFile"
                  Style="{DynamicResource ResourceKey=TextBoxFileStyle}">
         </TextBox>
         <Button Grid.Row="8" Grid.Column="9" Grid.ColumnSpan="2"
+                Name="ButtonSaveFile"
+                Click="ButtonSaveFile_OnClick"
                 Content="Save as"
                 Style="{DynamicResource ResourceKey=BaseButtonStyle}">
         </Button>
 
         <Button Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="2"
+                Name="ButtonDecrypt"
+                Click="ButtonDecrypt_OnClick"
                 Content="Decrypt"
                 Style="{DynamicResource ResourceKey=ButtonMajorStyle}">
         </Button>
@@ -429,6 +430,7 @@
                Style="{DynamicResource ResourceKey=LabelProgressBarStyle}">
         </Label>
         <ProgressBar Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="10"
+                     Name="ProgressBarDecryption"
                      Style="{DynamicResource ResourceKey=ProgressBarStyle}">
         </ProgressBar>
 
